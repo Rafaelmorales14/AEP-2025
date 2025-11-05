@@ -2,6 +2,8 @@ package com.inclusao.vagas_inclusivas.controller;
 
 import com.inclusao.vagas_inclusivas.model.Usuario;
 import com.inclusao.vagas_inclusivas.repository.UsuarioRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,8 +30,8 @@ public class UsuarioController {
 
     @PostMapping
     public Usuario criar(@RequestBody Usuario usuario) {
-        Usuario usuarioNovo =  usuarioRepository.save(usuario);
-        return usuarioNovo;
+        Usuario usuarioNovo = usuarioRepository.save(usuario);
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioNovo).getBody();
     }
 
     @PutMapping("/{id}")
