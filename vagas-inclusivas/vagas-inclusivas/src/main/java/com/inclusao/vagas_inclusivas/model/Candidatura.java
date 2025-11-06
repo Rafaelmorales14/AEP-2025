@@ -1,5 +1,6 @@
 package com.inclusao.vagas_inclusivas.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,6 +17,7 @@ public class Candidatura {
 
     @ManyToOne
     @JoinColumn(name = "vaga_id")
+    @JsonBackReference
     private Vaga vaga;
 
     private String statusCandidatura;
