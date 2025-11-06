@@ -1,6 +1,7 @@
 package com.inclusao.vagas_inclusivas.model;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.List;
@@ -19,6 +20,7 @@ public class Empresa {
     private String cidade;
     private String descricaoInclusao;
 
-    @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Vaga> vagas;
 }

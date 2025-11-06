@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/vagas")
+@RequestMapping("/empresas/{empresaId}/vagas")
 public class VagaController {
 
     private final VagaRepository vagaRepository;
@@ -20,24 +20,25 @@ public class VagaController {
         this.empresaRepository = empresaRepository;
     }
 
-    @PostMapping("/empresa/{empresaId}")
+    @PostMapping()
     public Vaga criarVaga(@PathVariable Long empresaId, @RequestBody Vaga vaga) {
         Empresa empresa = empresaRepository.findById(empresaId).orElseThrow();
         vaga.setEmpresa(empresa);
         return vagaRepository.save(vaga);
     }
 
-    @GetMapping()
-    public List<Vaga> listarVagas() {
-        return vagaRepository.findAll();
+    @GetMapping("/{vagaId}")
+    public Vaga buscarPorId(@PathVariable Long empresaId, @PathVariable Long vagaId) {
+        Vaga vaga = vagaRepository.findById(vagaId).orElseThrow();
+        return vaga;
     }
 
-    @GetMapping("/empresa/{empresaId}")
+    @GetMapping()
     public List<Vaga> listarVagasPorEmpresa(@PathVariable Long empresaId) {
         return vagaRepository.findByEmpresaId(empresaId);
     }
 
-    @PutMapping("/empresas/{empresaId}/vagas/{vagaId}")
+    @PutMapping("/{vagaId}")
     public Vaga atualizarVaga(@PathVariable Long empresaId, @PathVariable Long vagaId, @RequestBody Vaga vagaAtualizada) {
         Vaga vaga = vagaRepository.findById(vagaId).orElseThrow();
         vaga.setTitulo(vagaAtualizada.getTitulo());
@@ -48,7 +49,7 @@ public class VagaController {
         return vagaRepository.save(vaga);
     }
 
-    @DeleteMapping("/empresas/{empresaId}/vagas/{vagaId}")
+    @DeleteMapping("/{vagaId}")
     public void deletarVaga(@PathVariable Long empresaId, @PathVariable Long vagaId) {
         Vaga vaga = vagaRepository.findById(vagaId).orElseThrow();
         vagaRepository.deleteById(vagaId);

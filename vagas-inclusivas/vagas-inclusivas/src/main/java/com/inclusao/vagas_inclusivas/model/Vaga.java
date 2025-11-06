@@ -1,5 +1,6 @@
 package com.inclusao.vagas_inclusivas.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.List;
@@ -19,6 +20,7 @@ public class Vaga {
 
     @ManyToOne
     @JoinColumn(name = "empresa_id")
+    @JsonBackReference
     private Empresa empresa;
 
     @OneToMany(mappedBy = "vaga", cascade = CascadeType.ALL)
